@@ -24,32 +24,32 @@ public class Student {
         this.age = new SimpleIntegerProperty(age);
     }
 
-    // surname
+    // фамилия
     public String getSurname() { return surname.get(); }
     public StringProperty surnameProperty() { return surname; }
     public void setSurname(String surname) { this.surname.set(surname); }
 
-    // name
+    // имя
     public String getName() { return name.get(); }
     public StringProperty nameProperty() { return name; }
     public void setName(String name) { this.name.set(name); }
 
-    // thirdname
+    // отчество
     public String getThirdname() { return thirdname.get(); }
     public StringProperty thirdnameProperty() { return thirdname; }
     public void setThirdname(String thirdname) { this.thirdname.set(thirdname); }
 
-    // age
+    // возраст
     public int getAge() { return age.get(); }
     public IntegerProperty ageProperty() { return age; }
     public void setAge(int age) { this.age.set(age); }
 
-    // group
+    // группа
     public String getGroup() { return group.get(); }
     public StringProperty groupProperty() { return group; }
     public void setGroup(String group) { this.group.set(group); }
 
-    // city
+    // город
     public String getCity() { return city.get(); }
     public StringProperty cityProperty() { return city; }
     public void setCity(String city) { this.city.set(city); }

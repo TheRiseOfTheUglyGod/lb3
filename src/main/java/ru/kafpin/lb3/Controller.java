@@ -30,7 +30,7 @@ public class Controller {
 
     @FXML
     void initialize() {
-        // Начальные данные (как в методичке, но с новыми полями)
+        // Начальные данные
         students.add(new Student("Иванов", "Миша", "Петрович", "Пин-124", "Муром", 20));
         students.add(new Student("Петров", "Леша", "Сергеевич", "ИС-123", "Владимир", 21));
 
@@ -44,7 +44,6 @@ public class Controller {
 
         studentsTable.setItems(students);
 
-        // Слушатель выбора строки
         studentsTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -79,7 +78,7 @@ public class Controller {
         Student selected = studentsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             showDialog(selected);
-            studentsTable.refresh(); // чтобы обновить данные в таблице после редактирования
+            studentsTable.refresh();
         } else {
             lblLog.setText("Не выбрана строка для редактирования");
         }
