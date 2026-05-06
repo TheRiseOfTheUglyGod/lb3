@@ -17,106 +17,107 @@ import java.io.IOException;
 
 public class Controller {
 
-    @FXML
-    private TableView<Student> studentsTable;
-    @FXML
-    private TableColumn<Student, String> surnameColumn;
-    @FXML
-    private TableColumn<Student, String> nameColumn;
-    @FXML
-    private TableColumn<Student, String> thirdColumn;
-    @FXML
-    private TableColumn<Student, Integer> ageColumn;
-    @FXML
-    private TableColumn<Student, String> groupColumn;
-    @FXML
-    private Label label1;
+    @FXML private TableView<Student> studentsTable;
+    @FXML private TableColumn<Student, String> surnameColumn;
+    @FXML private TableColumn<Student, String> nameColumn;
+    @FXML private TableColumn<Student, String> thirdnameColumn;
+    @FXML private TableColumn<Student, Integer> ageColumn;
+    @FXML private TableColumn<Student, String> groupColumn;
+    @FXML private TableColumn<Student, String> cityColumn;
+    @FXML private Label lblLog;
 
     private final ObservableList<Student> students = FXCollections.observableArrayList();
 
     @FXML
-    protected void initialize() {
-        students.add(new Student("Романович", "Пин-124", "Даниил", "Лебедев", 20));
-        students.add(new Student("Петрович", "ИС-123", "Алексей", "Зайцев", 21));
+    void initialize() {
+        // Начальные данные (как в методичке, но с новыми полями)
+        students.add(new Student("Иванов", "Миша", "Петрович", "Пин-124", "Муром", 20));
+        students.add(new Student("Петров", "Леша", "Сергеевич", "ИС-123", "Владимир", 21));
 
-        surnameColumn.setCellValueFactory(item -> item.getValue().surnameProperty());
-        nameColumn.setCellValueFactory(item -> item.getValue().nameProperty());
-        ageColumn.setCellValueFactory(item -> item.getValue().ageProperty().asObject());
-        thirdColumn.setCellValueFactory(item -> item.getValue().thirdnameProperty());
-        groupColumn.setCellValueFactory(item -> item.getValue().groupProperty());
+        // Привязка колонок к свойствам
+        surnameColumn.setCellValueFactory(cellData -> cellData.getValue().surnameProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        thirdnameColumn.setCellValueFactory(cellData -> cellData.getValue().thirdnameProperty());
+        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty().asObject());
+        groupColumn.setCellValueFactory(cellData -> cellData.getValue().groupProperty());
+        cityColumn.setCellValueFactory(cellData -> cellData.getValue().cityProperty());
 
         studentsTable.setItems(students);
 
+        // Слушатель выбора строки
         studentsTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        label1.setText(newValue.toString());
+                        showStudent(newValue);
                     } else {
-                        label1.setText("");
+                        lblLog.setText("");
                     }
-                }
-        );
+                });
+    }
+
+    private void showStudent(Student student) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Студент ");
+        sb.append(student.getSurname()).append(" ");
+        sb.append(student.getName()).append(" ");
+        sb.append(student.getThirdname()).append(", ");
+        sb.append("группа ").append(student.getGroup()).append(", ");
+        sb.append("город ").append(student.getCity()).append(", ");
+        sb.append("возраст ").append(student.getAge()).append(" лет.");
+        lblLog.setText(sb.toString());
     }
 
     @FXML
-    void add_click(ActionEvent event) {
+    void onAdd(ActionEvent event) throws IOException {
         Student student = new Student();
-        try {
-            showDialog(student);
-            students.add(student);
-        } catch (IOException e) {
-            label1.setText("Ошибка загрузки окна");
-        }
+        showDialog(student);
+        students.add(student);
     }
 
     @FXML
-    void edit_click(ActionEvent event) {
-        Student student = studentsTable.getSelectionModel().getSelectedItem();
-        if (student != null) {
-            try {
-                showDialog(student);
-                studentsTable.refresh();
-            } catch (IOException e) {
-                label1.setText("Ошибка загрузки окна");
-            }
+    void onEdit(ActionEvent event) throws IOException {
+        Student selected = studentsTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            showDialog(selected);
+            studentsTable.refresh(); // чтобы обновить данные в таблице после редактирования
         } else {
-            label1.setText("Не выбрана строка для редактирования");
+            lblLog.setText("Не выбрана строка для редактирования");
         }
     }
 
     @FXML
-    void del_click(ActionEvent event) {
-        int selectedIndex = studentsTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            studentsTable.getItems().remove(selectedIndex);
-            label1.setText("Строка удалена");
+    void onDelete(ActionEvent event) {
+        int index = studentsTable.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            studentsTable.getItems().remove(index);
+            lblLog.setText("Строка удалена");
         } else {
-            label1.setText("Не выбрана строка для удаления");
+            lblLog.setText("Не выбрана строка для удаления");
         }
     }
 
     @FXML
-    void exit_click(ActionEvent actionEvent) {
+    void exit_click(ActionEvent event) {
         System.exit(0);
     }
 
     private void showDialog(Student student) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("create-view.fxml"));
+        loader.setLocation(Main.class.getResource("new-student.fxml"));
         Parent root = loader.load();
 
-        Stage addStage = new Stage();
-        addStage.setTitle("Информация о студенте");
-        addStage.initModality(Modality.APPLICATION_MODAL);
-        addStage.initOwner(Application.getStartStage());
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Информация о студенте");
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.initOwner(Main.getPrimaryStage());
 
         Scene scene = new Scene(root);
-        addStage.setScene(scene);
+        dialogStage.setScene(scene);
 
         NewStudentController controller = loader.getController();
-        controller.setDialogStage(addStage);
+        controller.setDialogStage(dialogStage);
         controller.setStudent(student);
 
-        addStage.showAndWait();
+        dialogStage.showAndWait();
     }
 }

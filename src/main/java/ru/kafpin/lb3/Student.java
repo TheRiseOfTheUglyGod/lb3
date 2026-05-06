@@ -3,87 +3,60 @@ package ru.kafpin.lb3;
 import javafx.beans.property.*;
 
 public class Student {
-    private final StringProperty thirdname;
-    private final StringProperty group;
-    private final StringProperty name;
     private final StringProperty surname;
+    private final StringProperty name;
+    private final StringProperty thirdname;
     private final IntegerProperty age;
+    private final StringProperty group;
+    private final StringProperty city;
 
     public Student() {
-        this("", "", "", "", 0);
+        this("", "", "", "", "", 0);
     }
 
-    public Student(String thirdname, String group, String name, String surname, int age) {
+    public Student(String surname, String name, String thirdname, String group,
+                   String city, int age) {
+        this.surname = new SimpleStringProperty(surname);
+        this.name = new SimpleStringProperty(name);
         this.thirdname = new SimpleStringProperty(thirdname);
         this.group = new SimpleStringProperty(group);
-        this.name = new SimpleStringProperty(name);
-        this.surname = new SimpleStringProperty(surname);
+        this.city = new SimpleStringProperty(city);
         this.age = new SimpleIntegerProperty(age);
     }
 
-    public String getName() {
-        return name.get();
-    }
+    // surname
+    public String getSurname() { return surname.get(); }
+    public StringProperty surnameProperty() { return surname; }
+    public void setSurname(String surname) { this.surname.set(surname); }
 
-    public StringProperty nameProperty() {
-        return name;
-    }
+    // name
+    public String getName() { return name.get(); }
+    public StringProperty nameProperty() { return name; }
+    public void setName(String name) { this.name.set(name); }
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
+    // thirdname
+    public String getThirdname() { return thirdname.get(); }
+    public StringProperty thirdnameProperty() { return thirdname; }
+    public void setThirdname(String thirdname) { this.thirdname.set(thirdname); }
 
-    public String getSurname() {
-        return surname.get();
-    }
+    // age
+    public int getAge() { return age.get(); }
+    public IntegerProperty ageProperty() { return age; }
+    public void setAge(int age) { this.age.set(age); }
 
-    public StringProperty surnameProperty() {
-        return surname;
-    }
+    // group
+    public String getGroup() { return group.get(); }
+    public StringProperty groupProperty() { return group; }
+    public void setGroup(String group) { this.group.set(group); }
 
-    public void setSurname(String surname) {
-        this.surname.set(surname);
-    }
-
-    public int getAge() {
-        return age.get();
-    }
-
-    public IntegerProperty ageProperty() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age.set(age);
-    }
-
-    public String getThirdname() {
-        return thirdname.get();
-    }
-
-    public StringProperty thirdnameProperty() {
-        return thirdname;
-    }
-
-    public void setThirdname(String thirdname) {
-        this.thirdname.set(thirdname);
-    }
-
-    public String getGroup() {
-        return group.get();
-    }
-
-    public StringProperty groupProperty() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group.set(group);
-    }
+    // city
+    public String getCity() { return city.get(); }
+    public StringProperty cityProperty() { return city; }
+    public void setCity(String city) { this.city.set(city); }
 
     @Override
     public String toString() {
-        return String.format("Студент: %s %s %s, группа %s, возраст %d",
-                getSurname(), getName(), getThirdname(), getGroup(), getAge());
+        return String.format("Студент: %s %s %s, группа %s, город %s, возраст %d",
+                getSurname(), getName(), getThirdname(), getGroup(), getCity(), getAge());
     }
 }

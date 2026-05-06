@@ -7,43 +7,64 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.kafpin.lb3.Controller">
     <children>
         <SplitPane dividerPositions="0.3" prefHeight="400.0" prefWidth="600.0"
                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="186.0">
+                <!-- Левая панель с кнопками -->
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0"
+                            prefWidth="186.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#add_click" text="Добавить"
-                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <Button mnemonicParsing="false" onAction="#edit_click" text="Редактировать"
-                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0" />
-                        <Button mnemonicParsing="false" onAction="#del_click" text="Удалить"
-                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="65.0" />
-                        <Label fx:id="label1" text="Информация о студенте" wrapText="true"
-                               AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="95.0" />
-                        <Button mnemonicParsing="false" onAction="#exit_click" text="Выход"
-                                AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <Button text="Добавить" onAction="#onAdd"
+                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                AnchorPane.topAnchor="5.0"/>
+                        <Button text="Редактировать" onAction="#onEdit"
+                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                AnchorPane.topAnchor="35.0"/>
+                        <Button text="Удалить" onAction="#onDelete"
+                                AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                AnchorPane.topAnchor="65.0"/>
+                        <Label fx:id="lblLog" text="Информация о студенте"
+                               wrapText="true"
+                               AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                               AnchorPane.topAnchor="95.0"/>
+                        <Button text="Выход" onAction="#exit_click"
+                                AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                AnchorPane.rightAnchor="5.0"/>
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+
+                <!-- Правая панель с таблицей -->
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
+                            prefWidth="100.0">
                     <children>
-                        <TableView fx:id="studentsTable" prefHeight="398.0" prefWidth="417.0"
-                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="studentsTable" prefHeight="398.0"
+                                   prefWidth="417.0"
+                                   AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn fx:id="surnameColumn" prefWidth="75.0" text="Фамилия" />
-                                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Имя" />
-                                <TableColumn fx:id="thirdColumn" prefWidth="75.0" text="Отчество" />
-                                <TableColumn fx:id="ageColumn" prefWidth="75.0" text="Возраст" />
-                                <TableColumn fx:id="groupColumn" prefWidth="75.0" text="Группа" />
+                                <TableColumn fx:id="surnameColumn" prefWidth="75.0"
+                                             text="Фамилия"/>
+                                <TableColumn fx:id="nameColumn" prefWidth="75.0"
+                                             text="Имя"/>
+                                <TableColumn fx:id="thirdnameColumn" prefWidth="75.0"
+                                             text="Отчество"/>
+                                <TableColumn fx:id="ageColumn" prefWidth="75.0"
+                                             text="Возраст"/>
+                                <TableColumn fx:id="groupColumn" prefWidth="75.0"
+                                             text="Группа"/>
+                                <TableColumn fx:id="cityColumn" prefWidth="75.0"
+                                             text="Город"/>
                             </columns>
                             <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                             </columnResizePolicy>
                         </TableView>
                     </children>
